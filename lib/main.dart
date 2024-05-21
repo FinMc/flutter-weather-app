@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future main() async {
-  await DotEnv().load();
+  await dotenv.load(fileName: ".env");
   runApp(const WeatherApp());
 }
 
@@ -65,7 +65,7 @@ class MyAppState extends State<WeatherApp> {
 
   void _fetchWeather() async {
     Position location = await getLocation();
-    String apiKey = DotEnv().env['API_KEY'] ?? '';
+    String apiKey = dotenv.env['API_KEY'] ?? '';
     final weatherService = WeatherService(apiKey);
     final weather = await weatherService.getWeather(location);
     city = weather.name;
@@ -89,13 +89,14 @@ class MyAppState extends State<WeatherApp> {
                   children: [
                     Text(
                       city,
-                      style: const TextStyle(fontSize: 24),
+                      style: const TextStyle(fontSize: 48),
                     ),
                     Text(
                       '${weatherData!.celciusTemperature.toStringAsFixed(1)}°C',
-                      style: const TextStyle(fontSize: 32),
+                      style: const TextStyle(fontSize: 56),
                     ),
-                    Text(weatherData!.description),
+                    Text(weatherData!.description, 
+                    style: const TextStyle(fontSize: 24)),
                     // Add an image widget to display weather icon based on iconCode
                     Image.network(
                       weatherData!.weatherIconUrl,
