@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp/weather.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async {
+  await DotEnv().load();
   runApp(const WeatherApp());
 }
 
@@ -63,7 +65,8 @@ class MyAppState extends State<WeatherApp> {
 
   void _fetchWeather() async {
     Position location = await getLocation();
-    final weatherService = WeatherService();
+    String apiKey = DotEnv().env['API_KEY'] ?? '';
+    final weatherService = WeatherService(apiKey);
     final weather = await weatherService.getWeather(location);
     city = weather.name;
     setState(() {

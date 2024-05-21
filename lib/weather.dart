@@ -16,8 +16,10 @@ class Weather {
 }
 
 class WeatherService {
-  static const String apiKey = 'b8eef573a6187028c52c72ea4a69e43a'; // Replace with your API key
+  final String apiKey;
   static const String baseUrl = 'https://api.openweathermap.org/data/2.5/weather';
+
+  WeatherService(this.apiKey);
 
   Future<Weather> getWeather(Position city) async {
     double lat = city.latitude;
